@@ -1,0 +1,98 @@
+body {
+    background-image: url("media/car_lights.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#comment-bubble {
+  position: relative;
+  background-color: rgba(55, 101, 201, 0.6);
+  text-align: center;
+  color: gainsboro;
+  font-size: 23px;
+  padding: 15px;
+  border: 8px solid #333;
+  border-radius: 10px;
+  margin: auto;
+  width: 45%;
+  margin-top: 45px;
+  margin-bottom: 3%;
+}
+
+
+#comment-bubble:before,
+#comment-bubble:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+#comment-bubble:before {
+    left: 30px;
+    bottom: -50px;
+    border: 25px solid;
+    border-color: #333 transparent transparent #333;
+}
+
+#comment-bubble:after {
+    left: 38px;
+    bottom: -30px;
+    border: 15px solid;
+    border-color: rgba(55, 101, 201, 0.6) transparent transparent rgba(55, 101, 201, 0.6);
+}
+
+
+.answer{
+    display: block;
+    text-align: center;
+    position: relative;
+    line-height: 1.5em;
+    margin: 20px auto;
+    background-color: rgba(55, 101, 201, 0.6);
+    border: 8px solid #333;
+    border-radius: 30px;
+    font-family: sans-serif;
+    padding: 15px;
+    color: black;
+    font-size: 23px;
+    font-weight: bold;
+    width: 300px;
+    cursor: pointer;
+}
+
+
+.answer:hover{
+    background-color: rgba(0, 255, 0, 0.6);
+    border: 8px solid rgb(255, 255, 255);
+}
+
+.answer:active{
+    transform: scale(1.2);
+}
+
+.clicked{
+    background-color: rgba(255, 0, 0, 0.6);
+    border: 8px solid rgb(255, 208, 0);
+}
+
+.button_ok {
+    display: flex; justify-content: center;
+    width: 110px;
+    height: 70px;
+    margin: auto;
+}
+
+.button_ok:active {
+    transform: scale(1.3);
+}
+
+.priority{
+    position: absolute;
+    left: -70px;
+    font-weight: bolder;
+    font-size: 40px;
+    color: red;
+}
+

@@ -1,0 +1,8 @@
+port: 8080
+
+postgre:
+    user: "postgres"
+    password: "bmw"
+    dbname: "survey"
+    dbname1: "vehicles"
+    sslmode: "disable"

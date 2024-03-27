@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cars</title>
+  <link rel="icon" href="/styles/media/Searchallwreckers-Car-Ford-Mustang.256.png" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="/styles/car_card.css">
+</head>
+<body>
+  <h2 class="header">{{ .Car.FullName }}</h2>
+    <p class="price">{{ .Car.Offering.Price }}</p>
+  <div class="carousel">
+    <button class="carousel__button carousel__button--left">&lt;</button>
+    <div class="carousel__images">
+     {{range $index, $image := .Car.Offering.PhotoURLs}}
+     <img src={{$image}} onclick="expandImage(this)">
+       {{end}}
+    </div>
+    <button class="carousel__button carousel__button--right">&gt;</button>
+  </div>
+
+  <div class="fullscreen-container">
+    <img class="fullscreen-image" src="" alt="">
+    <button class="zoom-button" onclick="zoomImage()">&#128269; +</button>
+    <button class="close-button" onclick="closeFullscreen()">X</button>
+    <button class="fullscreen__button fullscreen__button--left">&lt;</button>
+    <button class="fullscreen__button fullscreen__button--right">&gt;</button>
+  </div>
+
+  <div class="car_page">
+    <span class="heading">Описание</span>
+   <span class="desc"> {{ .Car.Description }} </span>
+   <button id="expand">Развернуть</button>
+   <span class="heading two">Характеристики</span>
+      <span class="smallHeading">Общие параметры</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Цена</td>
+          <td class="value">{{ .Car.Offering.Price }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Пробег, км</td>
+          <td class="value">{{ .Car.Offering.Kilometerage }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Год выпуска</td>
+          <td class="value">
+            {{ if eq .Car.Offering.Year 0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Offering.Year }}
+            {{ end }}
+          </td>
+        </tr>
+        <tr>
+          <td class="variable">Поколение</td>
+          <td class="value">{{ .Car.Generation }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Тип трансмиссии</td>
+          <td class="value">{{ .Car.Specs.Gearbox }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Тип привода</td>
+          <td class="value">{{ .Car.Specs.Drive }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Тип кузова</td>
+          <td class="value">{{ .Car.Specs.Body }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Расположение руля</td>
+          <td class="value">{{ .Car.Specs.SteeringWheel.SteeringWheelPosition }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Цвет</td>
+          <td class="value">{{ .Car.Features.Color }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Число мест</td>
+          <td class="value">
+            {{ if eq .Car.Specs.NumberOfSeats 0}}
+               Неизвестно
+            {{ else }}
+            {{ .Car.Specs.NumberOfSeats }}
+            {{ end }}
+          </td>
+        </tr>
+        <tr>
+          <td class="variable">Название комплектации</td>
+          <td class="value">{{ .Car.TrimLevel }}</td>
+        </tr>
+        </table>
+
+      <span class="smallHeading">Динамические характеристики</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Время разгона 0-100 км/ч, с</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Acceleration0To100 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Acceleration0To100 }}
+            {{ end }}
+          </td>
+        </tr>  
+        <tr>
+          <td class="variable">Максимальная скорость, км/ч</td>
+          <td class="value">
+            {{ if eq .Car.Specs.MaxSpeed 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.MaxSpeed }}
+            {{ end }}
+          </td>
+        </tr>    
+        <tr>
+          <td class="variable">Тип двигателя</td>
+          <td class="value">{{ .Car.Specs.Engine.EngineType }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Максимальная мощность, л.с. (кВт) при об./мин.</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Engine.MaxPower 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Engine.MaxPower }}
+            {{ end }}
+          </td>
+        </tr>   
+        <tr>
+          <td class="variable">Максимальный крутящий момент, Н*м (кг*м) при об./мин.</td>
+          <td class="value">{{ .Car.Specs.Engine.MaxTorque }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Объем двигателя, куб.см</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Engine.Capacity 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Engine.Capacity }}
+            {{ end }}
+          </td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Расход топлива</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Используемое топливо</td>
+          <td class="value">{{ .Car.Specs.Engine.FuelUsed }}</td>
+        </tr>  
+        <tr>
+          <td class="variable">Расход топлива в городском цикле, л/100 км</td>
+          <td class="value">
+            {{ if eq .Car.Specs.CityFuelConsumption 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.CityFuelConsumption }}
+            {{ end }}
+          </td>
+        </tr>  
+        <tr>
+          <td class="variable">Расход топлива за городом, л/100 км</td>
+          <td class="value">
+            {{ if eq .Car.Specs.HighwayFuelConsumption 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.HighwayFuelConsumption }}
+            {{ end }}
+          </td>
+        </tr>  
+        <tr>
+          <td class="variable">Расход топлива в смешанном цикле, л/100 км</td>
+          <td class="value">
+            {{ if eq .Car.Specs.MixedFuelConsumption 0.0}}
+              Неизвестно
+           {{ else }}
+           {{ .Car.Specs.MixedFuelConsumption }}
+           {{ end }}
+          </td>
+        </tr>  
+      </table>
+
+      <span class="smallHeading">Габариты и масса</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Длина, мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Length 0.0 }}
+              Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Length }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Ширина, мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Width 0.0 }}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Width }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Высота, мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Height 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Height }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Ширина передней колеи, мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.FrontTrackWidth 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.FrontTrackWidth }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Ширина задней колеи, мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.BackTrackWidth 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.BackTrackWidth }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Колесная база, мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Wheelbase 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Wheelbase }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Клиренс (высота дорожного просвета), мм</td>
+          <td class="value">
+            {{ if eq .Car.Specs.GroundClearance 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.GroundClearance }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Масса, кг</td>
+          <td class="value">
+            {{ if eq .Car.Specs.Mass 0.0 }}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Mass }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Объем багажника, л</td>
+          <td class="value">
+            {{ if eq .Car.Specs.TrunkVolume 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.TrunkVolume  }}
+            {{ end }}
+          </td>
+        </tr>   
+        <tr>
+          <td class="variable">Коэффициент аэродинамического сопротивления, cW</td>
+          <td class="value">
+            {{ if eq .Car.Specs.DragCoefficient 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.DragCoefficient }}
+            {{ end }}
+          </td>
+        </tr>   
+      </table>
+
+      <span class="smallHeading">Усилители рулевого управления</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Усилитель руля</td>
+          <td class="value">{{ .Car.Specs.SteeringWheel.PowerSteering }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Подвеска</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Передний стабилизатор</td>
+          <td class="value">{{ .Car.Specs.Suspension.FrontStabilizer }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Задний стабилизатор</td>
+          <td class="value">{{ .Car.Specs.Suspension.BackStabilizer }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Передняя подвеска</td>
+          <td class="value">{{ .Car.Specs.Suspension.FrontSuspension }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Задняя подвеска</td>
+          <td class="value">{{ .Car.Specs.Suspension.BackSuspension }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Тормоза</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Передние тормоза</td>
+          <td class="value">{{ .Car.Specs.Brakes.FrontBrakes }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Задние тормоза</td>
+          <td class="value">{{ .Car.Specs.Brakes.BackBrakes }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Стояночный тормоз</td>
+          <td class="value">{{ .Car.Specs.Brakes.ParkingBrake }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Шины</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Передние шины</td>
+          <td class="value">
+            {{ if or (eq .Car.Specs.Tires.FrontTiresWidth 0) (eq .Car.Specs.Tires.FrontTiresAspectRatio 0) (eq .Car.Specs.Tires.FrontTiresRimDiameter 0) }}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Tires.FrontTiresWidth }}/{{ .Car.Specs.Tires.FrontTiresAspectRatio }} R{{ .Car.Specs.Tires.FrontTiresRimDiameter }}
+            {{ end }}
+          </td>
+        </tr> 
+        <tr>
+          <td class="variable">Задние шины</td>
+          <td class="value">
+            {{ if or (eq .Car.Specs.Tires.BackTiresWidth 0) (eq .Car.Specs.Tires.BackTiresAspectRatio 0) (eq .Car.Specs.Tires.BackTiresRimDiameter 0) }}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.Tires.BackTiresWidth }}/{{ .Car.Specs.Tires.BackTiresAspectRatio }} R{{ .Car.Specs.Tires.BackTiresRimDiameter }}
+            {{ end }}
+          </td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Фары</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Передние фары</td>
+          <td class="value">{{ .Car.Features.Lights.Headlights }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Светодиодные ходовые огни</td>
+          <td class="value">{{ .Car.Features.Lights.LEDRunningLights }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Cветодиодные задние фонари</td>
+          <td class="value">{{ .Car.Features.Lights.LEDTailLights }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Передние противотуманные фары</td>
+          <td class="value">{{ .Car.Features.Lights.FrontFogLights }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Задние противотуманные фонари</td>
+          <td class="value">{{ .Car.Features.Lights.BackFogLights }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Датчик света</td>
+          <td class="value">{{ .Car.Features.Lights.LightSensor }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Интерьер</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Обивка салона</td>
+          <td class="value">{{ .Car.Features.Interior.Upholstery }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Климат салона</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Кондиционер</td>
+          <td class="value">{{ .Car.Features.CabinMicroclimate.AirConditioner }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Климат-контроль</td>
+          <td class="value">{{ .Car.Features.CabinMicroclimate.ClimateControl }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Электропакет</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Электрические стеклоподъемники передние</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricFrontSideWindowsLifts }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электрические стеклоподъемники задние</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricBackSideWindowsLifts }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электроподогрев передних сидений</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricHeatingOfFrontSeats }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электроподогрев задних сидений</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricHeatingOfBackSeats }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электроподогрев рулевого колеса</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricHeatingOfSteeringWheel }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электроподогрев лобового стекла</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricHeatingOfWindshield }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Обогрев заднего стекла</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricHeatingOfRearWindow }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электроподогрев зеркал</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricHeatingOfSideMirrors }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электропривод водительского сиденья</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricDriveOfDriverSeat }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Электропривод боковых зеркал</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricDriveOfSideMirrors }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Электропривод передних сидений</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricDriveOfFrontSeats }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Электропривод багажника</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.ElectricTrunkOpener }}</td>
+        </tr>
+        <tr>
+          <td class="variable">Датчик дождя</td>
+          <td class="value">{{ .Car.Features.ElectricOptions.RainSensor }}</td>
+        </tr>
+      </table>
+
+      <span class="smallHeading">Аудио системы</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Бортовой компьютер</td>
+          <td class="value">{{ .Car.Features.MultimediaSystems.OnBoardComputer }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Поддержка MP3</td>
+          <td class="value">{{ .Car.Features.MultimediaSystems.MP3Support }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Hands free</td>
+          <td class="value">{{ .Car.Features.MultimediaSystems.HandsFreeSupport }}</td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Системы безопасности и контроля движения</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Антиблокировочная система (ABS)</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.ABS }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Система электронного контроля устойчивости (ESP)</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.ESP }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Система распределения тормозного усилия (EBD)</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.EBD }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Вспомогательная система торможения (BAS)</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.BAS }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Антипробуксовочная система (TCS)</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.TCS }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Передний парктроник</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.FrontParkingSensor }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Задний парктроник</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.BackParkingSensor }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Камера заднего обзора</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.RearViewCamera }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Круиз-контроль</td>
+          <td class="value">{{ .Car.Features.SafetyAndMotionControlSystem.CruiseControl }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Сигнализация</td>
+          <td class="value">{{ .Car.Features.CarAlarm }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Результаты краш-теста Euro NCAP</td>
+          <td class="value">
+            {{ if eq .Car.Specs.CrashTestEstimate 0.0}}
+                Неизвестно
+            {{ else }}
+            {{ .Car.Specs.CrashTestEstimate }}
+            {{ end }}
+          </td>
+        </tr> 
+      </table>
+
+      <span class="smallHeading">Подушки безопасности</span>
+      <table class="tbl">
+        <tr>
+          <td class="variable">Подушка безопасности водительская</td>
+          <td class="value">{{ .Car.Features.Airbags.DriverAirbag }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Подушка безопасности переднего пассажира</td>
+          <td class="value">{{ .Car.Features.Airbags.FrontPassengerAirbag }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Подушка безопасности боковая</td>
+          <td class="value">{{ .Car.Features.Airbags.SideAirbags }}</td>
+        </tr> 
+        <tr>
+          <td class="variable">Подушки безопасности-шторки</td>
+          <td class="value">{{ .Car.Features.Airbags.CurtainAirbags }}</td>
+        </tr> 
+      </table>
+      
+      <button id="collapse">Свернуть</button>
+  </div>
+  <button class="jump_to_previous_page" onClick='location.href="http://localhost:8080/{{.PartOfLink}}"'>Назад</button>
+  <script src="/scripts/car_card.js"></script>
+</body>
+</html>

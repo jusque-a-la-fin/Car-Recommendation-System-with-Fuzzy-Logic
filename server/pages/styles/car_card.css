@@ -1,0 +1,272 @@
+body {
+    background-color: #444444;
+  }
+  
+  .header {
+    text-align: center;
+    color:white;
+    padding-top: 1.5%;
+  }
+  
+  .price {
+    text-align: center;
+    font-size: x-large;
+    color:white;
+  }
+  
+  .carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 30px;
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .carousel__button {
+    width: 120px;
+    height: 50px;
+    font-weight: bold;
+    font-size: 30px;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: transparent; 
+    cursor: pointer;
+  }
+  
+  .carousel__button--left {
+  position: relative;
+  right: 5%;
+  }
+  
+  .carousel__button--right {
+    position: relative;
+    left: 5%;
+  }
+  
+  .carousel__button:hover {
+    background-color: #ccc;
+  }
+  
+  .carousel__images {
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    justify-content: space-between;
+  }
+  
+  .carousel__images img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+
+  
+  .carousel__images img:last-child {
+    margin-right: 0;
+  }
+  
+  
+  .fullscreen-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .fullscreen-image {
+    max-width: 90%;
+    max-height: 90%;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 60px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 20px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+  background-color:  #ccc;
+  color: black;
+  }
+  
+  .fullscreen__button {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    font-weight: bold;
+    font-size: 30px;
+    color: white;
+    border-radius: 50%;
+    border-color: transparent;
+    background-color: transparent; 
+  }
+  .fullscreen__button--left {
+    left: 20px;
+  }
+  .fullscreen__button--right {
+    right: 20px;
+  }
+  
+  .fullscreen__button:hover {
+    background-color:  #ccc; 
+    color: black;
+    cursor: pointer;
+  }
+  
+  .fullscreen-container.expanded {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .fullscreen-container.expanded .fullscreen-image {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+  
+  .no-scroll {
+    overflow: hidden;
+  }
+  
+  
+  .zoom-button {
+    position: absolute;
+    top: 10px;
+    right: 90px;
+    width: 80px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 30px;
+    border: none;
+    color: white;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  
+  .zoom-button:hover {
+    background-color: #ccc;
+    color: black;
+  }
+  
+  
+  .car_page {
+    border-radius: 15px;
+    background-color: grey;
+    width: 1300px;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 2.5%;
+    margin-bottom: 2%;
+    font-size: large;
+    flex-direction: column;
+  
+  }
+  
+  .heading {
+  position: relative;
+  padding-top: 30px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 20px;
+  font-size: larger;
+  font-weight: bold;
+  }
+  
+  .heading.two {
+    position: relative;
+    top: 24px;
+    display: none;
+  }
+
+  
+  #expand {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5%;
+    cursor: pointer;
+    font-size: larger;
+    width: 180px;
+    height: 40px;
+  }
+  
+  #collapse {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5%;
+    cursor: pointer;
+    display: none;
+    font-size: larger;
+    width: 180px;
+    height: 40px;
+  }
+  
+  .tbl{
+    display: none;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  
+  .jump_to_previous_page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -1%;
+    margin-bottom: 2%;
+    width: 300px;
+    height: 50px;
+    border-radius: 20px;
+    border-style: none;
+    font-size: x-large;
+  }
+
+.smallHeading {
+  padding-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 30px;
+  font-weight: bold;
+  display: none;
+}
+
+#generalParams {
+  padding-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-bottom: 30px;
+  font-weight: bold;
+  display: none;
+}

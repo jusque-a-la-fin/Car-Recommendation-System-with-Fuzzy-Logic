@@ -1,0 +1,103 @@
+body {
+    background-image: url("media/cars.jpg");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.comment-bubble {
+  position: relative;
+  background-color: rgba(55, 101, 201, 0.6);
+  text-align: center;
+  color: gainsboro;
+  font-size: 23px;
+  padding: 15px;
+  border: 8px solid #333;
+  border-radius: 10px;
+  margin: auto;
+  width: 45%;
+  margin-top: 45px;
+  margin-bottom: 3%;
+}
+
+
+.comment-bubble:before,
+.comment-bubble:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.comment-bubble:before {
+    left: 30px;
+    bottom: -50px;
+    border: 25px solid;
+    border-color: #333 transparent transparent #333;
+}
+
+.comment-bubble:after {
+    left: 38px;
+    bottom: -30px;
+    border: 15px solid;
+    border-color: rgba(55, 101, 201, 0.6) transparent transparent rgba(55, 101, 201, 0.6);
+}
+
+
+
+.lowest_price{
+    display: flex; justify-content: center;
+    position: relative;
+    margin: auto;
+    margin-top: 5%;
+    width: 32%;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
+
+.highest_price{
+    display: flex; justify-content: center;
+    position: relative;
+    margin: auto;
+    margin-top: 15px;
+    width: 32%;
+    font-size: 20px;
+    font-weight: bold;
+    color: red;
+}
+
+.label_for_lowest_price{
+    position:absolute
+}
+
+
+input[type="number"]
+{
+  width: 55%;
+  font-size:23px;
+}
+
+.button_ok {
+    display: flex; justify-content: center;
+    position: relative;
+    width: 85px;
+    height: 50px;
+    margin: auto;
+    margin-top: 25px;
+}
+
+.button_ok:active {
+    transform: scale(1.3);
+}
+
+
+.error-msg {
+    position: absolute;
+    top: 7px;
+    left: 130px;
+    color: red;
+    font-size: large;
+    pointer-events: none;
+    user-select: none;
+}
